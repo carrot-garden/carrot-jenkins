@@ -1,0 +1,55 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form">
+
+	<l:layout permission="${app.ADMINISTER}" norefresh="true">
+
+		<st:include page="side-panel.jelly" />
+
+		<l:main-panel>
+			<h1>
+				<img width="48" height="48" src="${imagesURL}/48x48/folder.gif" />
+				<img width="16" height="16" src="${imagesURL}/16x16/empty.gif" />
+				<j:out value="${%title}" />
+			</h1>
+
+			<j:out value="${%intro}" />
+			<h4>${%Directories}</h4>
+			<j:out value="${%scriptler-directory-text}" />
+			<br />
+			<j:out value="${it.scriptlerHomeDirectory}" />
+			<br />
+			<j:out value="${%scriptdirectorytext}" />
+			<br />
+			<j:out value="${it.scriptDirectory}" />
+			<p />
+			<f:form method="post" action="settingsAction">
+				<j:jelly xmlns:j="jelly:core">
+					<f:entry title="${%Disable remote catalog}" help="a.groovy">
+						<f:checkbox name="disableRemoteCatalog"
+							checked="${it.disableRemoteCatalog()}" />
+					</f:entry>
+					<f:entry title="${%Allow RunScript permission}"
+						help="/plugin/carrot-jenkins-tester-plugin/TesterManager/file-1.html">
+						<f:checkbox name="allowRunScriptPermission"
+							checked="${it.allowRunScriptPermission()}" />
+					</f:entry>
+					<f:entry title="${%Allow RunScript editing}"
+						help="/plugin/scriptler/help-allowRunScriptEdit.html">
+						<f:checkbox name="allowRunScriptEdit"
+							checked="${it.allowRunScriptEdit()}" />
+					</f:entry>
+				</j:jelly>
+				<f:block>
+					<f:submit value="${%Submit}" />
+				</f:block>
+			</f:form>
+
+			<j:if test="${it.disableRemoteCatalog()}">
+				<br />
+				<b>${%disabledtext}</b>
+			</j:if>
+
+		</l:main-panel>
+	</l:layout>
+</j:jelly>
